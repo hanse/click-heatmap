@@ -1,6 +1,7 @@
 # click-heatmap
 > Generate simple screenshots of a web pages with heat map overlay of recorded user clicks.
 
+![Screenshot](https://github.com/Hanse/click-heatmap/blob/master/screenshot.png)
 
 ## Usage
 ```bash
@@ -14,7 +15,7 @@ curl -L http://localhost:3000/analytics/sessions/123 | click-heatmap http://loca
 
 ## Install
 ```bash
-yarn add --global click-heatmap
+yarn global add click-heatmap
 ```
 
 Requires **Cairo** for node-canvas to work. See [this document](https://github.com/Automattic/node-canvas/tree/v1.x) for installation.
@@ -34,7 +35,7 @@ Expects data from stdin in this JSON format:
 }
 ```
 
-The program _does not_ record the actual clicks. That data must be provided from elsewhere.
+The program does *not* record the actual clicks. That data must be provided from elsewhere.
 
 ## License
 MIT

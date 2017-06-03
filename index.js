@@ -14,7 +14,10 @@ const cli = meow(`
   Usage: click-heatmap http://localhost:3000 < data.json > image.png
 
   Options
-    --px-ratio 2
+    --px-ratio Screen pixel ratio (default: 2)
+    --radius   Simpleheat point radius (default: 15)
+    --blur     Simpleheat blur radius (default: 25)
+    --wait     How long to wait for load (default: 2000)
 `);
 
 const jsonError = message => {
@@ -23,7 +26,10 @@ const jsonError = message => {
 };
 
 const url = cli.input[0];
-const pxRatio = cli.flags.pxRatio || 2;
+const pxRatio = +cli.flags.pxRatio || 2;
+const radius = +cli.flags.radius || 15;
+const blur = +cli.flags.blur || 25;
+const wait = cli.flags.wait || 2000;
 
 if (!url) {
   cli.showHelp();
@@ -57,7 +63,7 @@ getStdin().then(data => {
   nightmare
     .goto(url)
     .viewport(width, height)
-    .wait(2000)
+    .wait(wait)
     .screenshot()
     .end()
     .then(screenshot => {
@@ -68,7 +74,7 @@ getStdin().then(data => {
       const heatCanvas = new Canvas(width * pxRatio, height * pxRatio);
       const heat = simpleheat(heatCanvas);
       heat.data(points);
-      heat.radius(20, 25);
+      heat.radius(radius, blur);
       heat.draw();
 
       ctx.drawImage(heatCanvas, 0, 0, heatCanvas.width, heatCanvas.height);
