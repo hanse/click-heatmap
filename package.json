@@ -6,6 +6,11 @@
   "bin": {
     "click-heatmap": "./index.js"
   },
+  "files": [
+    "index.js",
+    "README.md",
+    "yarn.lock"
+  ],
   "dependencies": {
     "canvas": "^1.6.5",
     "get-stdin": "^5.0.1",
