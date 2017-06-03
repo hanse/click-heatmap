@@ -5,43 +5,44 @@ const Nightmare = require('nightmare');
 const simpleheat = require('simpleheat');
 const getStdin = require('get-stdin');
 const Canvas = require('canvas');
+const meow = require('meow');
 const { Image } = Canvas;
 
 const nightmare = Nightmare({ show: false });
 
-const pxRatio = 2;
+const cli = meow(`
+  Usage: click-heatmap http://localhost:3000 < data.json > image.png
 
-const usage = () => {
-  console.log(`Usage: click-heatmap http://localhost:3000 < data.json > image.png`);
-  process.exit(0);
-};
+  Options
+    --px-ratio 2
+`);
 
-const jsonError = () => {
-  console.error('Invalid JSON format. See the docs.');
+const jsonError = message => {
+  console.error(`Invalid JSON format: ${message}`);
   process.exit(1);
 };
 
-const args = process.argv.slice(2);
-const url = args[0];
+const url = cli.input[0];
+const pxRatio = cli.flags.pxRatio || 2;
 
 if (!url) {
-  usage();
+  cli.showHelp();
 }
 
-getStdin().then((data) => {
+getStdin().then(data => {
   if (!data) {
-    return usage();
+    return cli.showHelp();
   }
 
   let json;
   try {
     json = JSON.parse(data);
   } catch (err) {
-    return jsonError();
+    return jsonError('Could not parse');
   }
 
   if (!json.meta || !json.results) {
-    return jsonError();
+    return jsonError('Missing `meta` or `results` keys.');
   }
 
   const meta = json.meta;

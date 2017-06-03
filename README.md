@@ -23,8 +23,8 @@ Expects data from stdin in this JSON format:
 ```json
 {
   "meta": {
-    "innerWidth": "1680",
-    "innerHeight": "1050"
+    "innerWidth": 1680,
+    "innerHeight": 1050
   },
   "results": [
     [100, 100],

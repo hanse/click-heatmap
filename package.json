@@ -9,6 +9,7 @@
   "dependencies": {
     "canvas": "^1.6.5",
     "get-stdin": "^5.0.1",
+    "meow": "^3.7.0",
     "nightmare": "^2.10.0",
     "simpleheat": "^0.4.0"
   }
